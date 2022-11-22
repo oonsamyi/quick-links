@@ -1,0 +1,18 @@
+# 🚨 ВНИМАНИЕ! Файл сгенерирован автоматически с помощью команды "npm run gen-schema"
+
+type Query {
+  stub: Boolean
+}
+
+type Mutation {
+  createQuickLink(input: CreateQuickLinkInput!): String!
+}
+
+input CreateQuickLinkInput {
+  link: String!
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}

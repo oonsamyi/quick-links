@@ -1,0 +1,12 @@
+# Заглушка, поскольку возникают ts ошибки в модуле apollo, т.к. он ожидает обязательное наличие query
+type Query {
+  stub: Boolean
+}
+
+type Mutation {
+  createQuickLink(input: CreateQuickLinkInput!): String!
+}
+
+input CreateQuickLinkInput {
+  link: String!
+}
