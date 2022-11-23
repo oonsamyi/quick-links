@@ -15,7 +15,7 @@ interface Props extends StyledProps {
   autoFocus?: boolean
   required?: boolean
   disabled?: boolean
-  onChange(value: string): void
+  onChange?(value: string): void
   onEnterPress?(): void
 }
 
@@ -30,7 +30,7 @@ export function Input({
   autoFocus,
   required,
   disabled,
-  onChange,
+  onChange = () => {},
   onEnterPress = () => {},
   ...styledProps
 }: Props) {

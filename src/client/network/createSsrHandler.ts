@@ -53,20 +53,12 @@ export function createSsrHandler<Query = ParsedUrlQuery>(
       )
 
       if (redirectError) {
-        const { location, permanent, shouldReloadClient } =
-          redirectError.extensions
+        const { location, permanent } = redirectError.extensions
 
         return {
           redirect: {
             destination: location,
             permanent,
-            /**
-             * Это хак. При basePath: false не происходит подгрузка SPA чанков, а происходит релоад всей страницы.
-             * Если убрать данный параметр nextjs будет пытаться загрузить чанк (например, /api/resource/create.js), на который придет 404.
-             * На самом деле, истинное значене basePath: false - не добавлять префикс basePath к урлу. Подробнее:
-             * https://nextjs.org/docs/api-reference/next.config.js/headers#headers-with-basepath-support
-             */
-            ...(shouldReloadClient && { basePath: false }),
           },
         }
       }

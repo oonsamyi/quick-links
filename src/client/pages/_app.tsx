@@ -1,6 +1,5 @@
 import 'normalize.css'
 import 'react-toastify/dist/ReactToastify.css'
-import 'nprogress/nprogress.css'
 import type { AppProps } from 'next/app'
 import { ApolloProvider } from '@apollo/client'
 import Head from 'next/head'
@@ -8,35 +7,6 @@ import { Layout as DefaultLayout } from '../uiKit/layout'
 import React from 'react'
 import { useApollo } from '../apollo/useApollo'
 import { ToastContainer } from 'react-toastify'
-import NProgress from 'nprogress'
-import Router from 'next/router'
-
-interface RouteChangeParams {
-  shallow: boolean
-}
-
-NProgress.configure({ showSpinner: false, minimum: 0.7 })
-
-Router.events.on(
-  'routeChangeStart',
-  (url: string, { shallow }: RouteChangeParams) => {
-    if (!shallow) NProgress.start()
-  },
-)
-
-Router.events.on(
-  'routeChangeComplete',
-  (url: string, { shallow }: RouteChangeParams) => {
-    if (!shallow) NProgress.done()
-  },
-)
-
-Router.events.on(
-  'routeChangeError',
-  (err: any, url: string, { shallow }: RouteChangeParams) => {
-    if (!shallow) NProgress.done()
-  },
-)
 
 export default function App({ Component, pageProps }: AppProps) {
   const apolloClient = useApollo(pageProps)
@@ -117,15 +87,6 @@ export default function App({ Component, pageProps }: AppProps) {
         a {
           color: inherit;
           text-decoration: none;
-        }
-
-        #nprogress .bar {
-          background: var(--primaryColor);
-          height: 3px;
-        }
-
-        #nprogress .peg {
-          box-shadow: 0 0 10px var(--primaryColor), 0 0 5px var(--primaryColor);
         }
 
         .Toastify__toast-body {

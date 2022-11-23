@@ -8,19 +8,30 @@ export const QuickLink = withProviders(() => {
 
   return (
     <div className="wrapper">
-      <Button
-        alignSelf="center"
-        loading={state.loading}
-        onClick={actions.createQuickLink}
-      >
-        Создать короткую ссылку
-      </Button>
-
-      <div className="token">
+      <div className="longLink">
         <Input
+          maxWidth={280}
+          value={state.longLink}
+          placeholder="Вставьте ссылку"
+          onChange={actions.setLongLink}
+        />
+
+        <Button
+          ml={20}
+          alignSelf="center"
+          size="M"
+          loading={state.loading}
+          onClick={actions.createQuickLink}
+        >
+          Создать короткую ссылку
+        </Button>
+      </div>
+
+      <div className="quickLink">
+        <Input
+          maxWidth={280}
           value={state.quickLink}
-          placeholder="Ссылка появится здесь"
-          onChange={() => {}}
+          placeholder="Короткая ссылка появится здесь"
         />
 
         <Button
@@ -40,7 +51,11 @@ export const QuickLink = withProviders(() => {
           margin-top: 25vh;
         }
 
-        .token {
+        .longLink {
+          display: flex;
+        }
+
+        .quickLink {
           margin-top: 40px;
           display: flex;
         }

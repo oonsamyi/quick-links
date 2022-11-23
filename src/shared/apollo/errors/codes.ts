@@ -1,4 +1,5 @@
 export enum ApolloCodes {
   NEED_REDIRECT = 'NEED_REDIRECT',
   NOT_FOUND = 'NOT_FOUND',
+  BAD_REQUEST = 'BAD_REQUEST',
 }

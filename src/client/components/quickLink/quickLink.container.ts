@@ -15,6 +15,8 @@ function useQuickLink() {
   const quickLink = createQuickLinkResult.data?.createQuickLink || ''
 
   const createQuickLink = async () => {
+    if (!longLink.trim()) return
+
     setLoading(true)
 
     const { data } = await createQuickLinkRequest({

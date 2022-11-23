@@ -3,7 +3,7 @@ import { ApolloCodes } from './codes'
 
 export class NotFoundApolloError extends ApolloError {
   constructor(message: string) {
-    super(message, ApolloCodes.NOT_FOUND)
+    super(message, ApolloCodes.BAD_REQUEST)
 
     Object.defineProperty(this, 'name', { value: NotFoundApolloError.name })
   }

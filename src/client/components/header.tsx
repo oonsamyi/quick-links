@@ -1,7 +1,6 @@
 import { Logo } from 'src/client/uiKit/logo'
 import { StyledProps, useStyle } from 'src/client/hooks/useStyle'
 import { Link } from '../uiKit/link'
-import { header } from '../constants/ui'
 
 export function Header(styledProps: StyledProps) {
   const style = useStyle(styledProps, defaultStyledProps)
@@ -14,7 +13,7 @@ export function Header(styledProps: StyledProps) {
 
       <style jsx>{`
         .header {
-          height: ${header.height}px;
+          height: 40px;
         }
       `}</style>
 
@@ -29,5 +28,5 @@ export function Header(styledProps: StyledProps) {
 }
 
 const defaultStyledProps = {
-  mb: header.marginBottom,
+  mb: 40,
 }

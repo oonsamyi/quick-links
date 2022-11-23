@@ -3,11 +3,10 @@ import {
   ArgumentsHost,
   HttpException,
   InternalServerErrorException,
-  BadRequestException,
 } from '@nestjs/common'
 import { BaseExceptionFilter } from '@nestjs/core'
 import { GqlContextType } from '@nestjs/graphql'
-import { Logger } from '../modules/logger/logger.service'
+import { LoggerService } from '../modules/logger/logger.service'
 import { getAgnosticRequest } from '../utils/network/getAgnosticRequest'
 
 /**
@@ -22,16 +21,14 @@ import { getAgnosticRequest } from '../utils/network/getAgnosticRequest'
  */
 @Catch()
 export class AllExceptionsFilter extends BaseExceptionFilter {
-  constructor(private logger: Logger) {
+  constructor(private loggerService: LoggerService) {
     super()
   }
 
   catch(exception: unknown, host: ArgumentsHost) {
     const req = getAgnosticRequest(host)
 
-    if (!(exception instanceof BadRequestException)) {
-      this.logger.httpError({ error: exception, req })
-    }
+    this.loggerService.httpError({ error: exception, req })
 
     const preparedException = prepareException(exception)
 

@@ -13,6 +13,7 @@ import { RedirectExceptionFilter } from './filters/redirectException.filter'
 import { NotFoundExceptionFilter } from './filters/notFoundException.filter'
 import { QuickLinksModule } from './modules/quickLinks/quickLinks.module'
 import { LoggerModule } from './modules/logger/logger.module'
+import { BadRequestExceptionFilter } from './filters/badRequestException.filter'
 
 @Module({
   imports: [
@@ -37,9 +38,8 @@ import { LoggerModule } from './modules/logger/logger.module'
       context: ({ req, res }: GqlContext) => ({ req, res }),
       cache: 'bounded',
     }),
-    QuickLinksModule,
-    // должен находиться в конце списка, чтобы не переопределять роутинг nest
     ViewModule,
+    QuickLinksModule,
   ],
   providers: [
     {
@@ -53,6 +53,10 @@ import { LoggerModule } from './modules/logger/logger.module'
     {
       provide: APP_FILTER,
       useClass: NotFoundExceptionFilter,
+    },
+    {
+      provide: APP_FILTER,
+      useClass: BadRequestExceptionFilter,
     },
   ],
 })

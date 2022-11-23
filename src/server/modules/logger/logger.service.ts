@@ -15,7 +15,7 @@ import { formatError } from './utils/formatError'
 import { getTimestamp } from './utils/getTimestamp'
 
 @Injectable()
-export class Logger implements TLoggerService {
+export class LoggerService implements TLoggerService {
   constructor(private configService: ConfigService) {}
 
   log(message: unknown) {

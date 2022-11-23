@@ -1,6 +1,6 @@
-import { Args, Resolver, Mutation } from '@nestjs/graphql'
-import { CreateQuickLinkInput } from 'src/server/graphql/types'
-import { TrimPipe } from 'src/server/pipes/trim.pipe'
+import { Args, Resolver, Mutation, Context } from '@nestjs/graphql'
+import { GqlContext } from 'src/server/types/graphql'
+import { CreateQuickLinkDto } from './quickLinks.dto'
 import { QuickLinksService } from './quickLinks.service'
 
 @Resolver()
@@ -9,8 +9,12 @@ export class QuickLinksResolver {
 
   @Mutation()
   async createQuickLink(
-    @Args('input', new TrimPipe('link')) input: CreateQuickLinkInput,
+    @Args('input') input: CreateQuickLinkDto,
+    @Context() { req }: GqlContext,
   ): Promise<string> {
-    return this.quickLinksService.create(input)
+    const { headers } = req
+    const origin = headers.origin || ''
+
+    return this.quickLinksService.create(input, { origin })
   }
 }
