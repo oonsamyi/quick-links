@@ -38,8 +38,8 @@ import { BadRequestExceptionFilter } from './filters/badRequestException.filter'
       context: ({ req, res }: GqlContext) => ({ req, res }),
       cache: 'bounded',
     }),
-    ViewModule,
     QuickLinksModule,
+    ViewModule,
   ],
   providers: [
     {

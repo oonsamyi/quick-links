@@ -7,16 +7,28 @@
 
 /* tslint:disable */
 /* eslint-disable */
+export class LastQuickLinksInput {
+    count: number;
+}
+
 export class CreateQuickLinkInput {
     link: string;
 }
 
 export abstract class IQuery {
-    abstract stub(): Nullable<boolean> | Promise<Nullable<boolean>>;
+    abstract lastQuickLinks(input: LastQuickLinksInput): QuickLink[] | Promise<QuickLink[]>;
+
+    abstract redirectToLink(linkId: string): string | Promise<string>;
 }
 
 export abstract class IMutation {
-    abstract createQuickLink(input: CreateQuickLinkInput): string | Promise<string>;
+    abstract createQuickLink(input: CreateQuickLinkInput): QuickLink | Promise<QuickLink>;
+}
+
+export class QuickLink {
+    id: string;
+    quickLink: string;
+    longLink: string;
 }
 
 type Nullable<T> = T | null;

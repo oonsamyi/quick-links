@@ -6,13 +6,29 @@ type ZEUS_UNIONS = never
 
 export type ValueTypes = {
   ['Query']: AliasType<{
-    stub?: boolean
+    lastQuickLinks?: [
+      { input: ValueTypes['LastQuickLinksInput'] },
+      ValueTypes['QuickLink'],
+    ]
+    redirectToLink?: [{ linkId: string }, boolean]
     __typename?: boolean
   }>
   ['Mutation']: AliasType<{
-    createQuickLink?: [{ input: ValueTypes['CreateQuickLinkInput'] }, boolean]
+    createQuickLink?: [
+      { input: ValueTypes['CreateQuickLinkInput'] },
+      ValueTypes['QuickLink'],
+    ]
     __typename?: boolean
   }>
+  ['QuickLink']: AliasType<{
+    id?: boolean
+    quickLink?: boolean
+    longLink?: boolean
+    __typename?: boolean
+  }>
+  ['LastQuickLinksInput']: {
+    count: number
+  }
   ['CreateQuickLinkInput']: {
     link: string
   }
@@ -20,11 +36,18 @@ export type ValueTypes = {
 
 export type ModelTypes = {
   ['Query']: {
-    stub?: boolean
+    lastQuickLinks: ModelTypes['QuickLink'][]
+    redirectToLink: string
   }
   ['Mutation']: {
-    createQuickLink: string
+    createQuickLink: ModelTypes['QuickLink']
   }
+  ['QuickLink']: {
+    id: string
+    quickLink: string
+    longLink: string
+  }
+  ['LastQuickLinksInput']: GraphQLTypes['LastQuickLinksInput']
   ['CreateQuickLinkInput']: GraphQLTypes['CreateQuickLinkInput']
 }
 
@@ -32,11 +55,21 @@ export type GraphQLTypes = {
   // 🚨 ВНИМАНИЕ! Файл сгенерирован автоматически с помощью команды "npm run gen-schema";
   ['Query']: {
     __typename: 'Query'
-    stub?: boolean
+    lastQuickLinks: Array<GraphQLTypes['QuickLink']>
+    redirectToLink: string
   }
   ['Mutation']: {
     __typename: 'Mutation'
-    createQuickLink: string
+    createQuickLink: GraphQLTypes['QuickLink']
+  }
+  ['QuickLink']: {
+    __typename: 'QuickLink'
+    id: string
+    quickLink: string
+    longLink: string
+  }
+  ['LastQuickLinksInput']: {
+    count: number
   }
   ['CreateQuickLinkInput']: {
     link: string

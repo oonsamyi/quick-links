@@ -1,1 +1,1 @@
-export const linkIdLength = 12
+export const linkIdLength = 10

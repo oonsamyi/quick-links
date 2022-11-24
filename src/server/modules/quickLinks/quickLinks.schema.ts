@@ -9,7 +9,10 @@ export class InternalQuickLink {
   id: string
 
   @Prop({ required: true })
-  link: string
+  quickLink: string
+
+  @Prop({ required: true })
+  longLink: string
 }
 
 const QuickLinkSchema = SchemaFactory.createForClass(InternalQuickLink)

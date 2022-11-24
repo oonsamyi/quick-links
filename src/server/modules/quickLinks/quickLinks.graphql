@@ -1,10 +1,21 @@
-# Заглушка, поскольку возникают ts ошибки в модуле apollo, т.к. он ожидает обязательное наличие query
 type Query {
-  stub: Boolean
+  lastQuickLinks(input: LastQuickLinksInput!): [QuickLink!]!
+  redirectToLink(linkId: String!): String!
 }
 
 type Mutation {
-  createQuickLink(input: CreateQuickLinkInput!): String!
+  createQuickLink(input: CreateQuickLinkInput!): QuickLink!
+}
+
+type QuickLink {
+  id: String!
+  # eslint-disable-next-line @graphql-eslint/no-typename-prefix
+  quickLink: String!
+  longLink: String!
+}
+
+input LastQuickLinksInput {
+  count: Int!
 }
 
 input CreateQuickLinkInput {

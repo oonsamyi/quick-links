@@ -1,6 +1,24 @@
 /* eslint-disable */
 
 export const AllTypesProps: Record<string, any> = {
+  Query: {
+    lastQuickLinks: {
+      input: {
+        type: 'LastQuickLinksInput',
+        array: false,
+        arrayRequired: false,
+        required: true,
+      },
+    },
+    redirectToLink: {
+      linkId: {
+        type: 'String',
+        array: false,
+        arrayRequired: false,
+        required: true,
+      },
+    },
+  },
   Mutation: {
     createQuickLink: {
       input: {
@@ -9,6 +27,14 @@ export const AllTypesProps: Record<string, any> = {
         arrayRequired: false,
         required: true,
       },
+    },
+  },
+  LastQuickLinksInput: {
+    count: {
+      type: 'Int',
+      array: false,
+      arrayRequired: false,
+      required: true,
     },
   },
   CreateQuickLinkInput: {
@@ -23,9 +49,15 @@ export const AllTypesProps: Record<string, any> = {
 
 export const ReturnTypes: Record<string, any> = {
   Query: {
-    stub: 'Boolean',
+    lastQuickLinks: 'QuickLink',
+    redirectToLink: 'String',
   },
   Mutation: {
-    createQuickLink: 'String',
+    createQuickLink: 'QuickLink',
+  },
+  QuickLink: {
+    id: 'String',
+    quickLink: 'String',
+    longLink: 'String',
   },
 }

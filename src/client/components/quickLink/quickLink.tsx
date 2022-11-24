@@ -1,5 +1,8 @@
 import { withProviders } from 'src/client/hocs/withProviders'
 import { Input } from 'src/client/uiKit/input/input'
+import { Link } from 'src/client/uiKit/link'
+import { Text } from 'src/client/uiKit/typography/text'
+import { Title } from 'src/client/uiKit/typography/title'
 import { Button } from '../../uiKit/button/button'
 import { QuickLinkContainer } from './quickLink.container'
 
@@ -44,11 +47,31 @@ export const QuickLink = withProviders(() => {
         </Button>
       </div>
 
+      <div className="lastLinks">
+        <Title size="M" mb={10}>
+          Последние созданные ссылки:
+        </Title>
+
+        {state.lastQuickLinks.map((link) => (
+          <div key={link.id}>
+            <Link href={link.longLink} asText target="_blank">
+              <Text size="S">{link.quickLink}</Text>
+            </Link>
+          </div>
+        ))}
+
+        {!state.lastQuickLinks.length && (
+          <Text size="S" color="#a0a0a0">
+            Ссылок пока нет. Создайте первую :)
+          </Text>
+        )}
+      </div>
+
       <style jsx>{`
         .wrapper {
           display: flex;
           flex-direction: column;
-          margin-top: 25vh;
+          margin-top: 14vh;
         }
 
         .longLink {
@@ -56,8 +79,12 @@ export const QuickLink = withProviders(() => {
         }
 
         .quickLink {
-          margin-top: 40px;
+          margin-top: 30px;
           display: flex;
+        }
+
+        .lastLinks {
+          margin-top: 40px;
         }
       `}</style>
     </div>

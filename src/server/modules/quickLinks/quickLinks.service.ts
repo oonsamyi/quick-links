@@ -1,6 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
-import { CreateQuickLinkInput } from 'src/server/graphql/types'
+import {
+  CreateQuickLinkInput,
+  LastQuickLinksInput,
+  QuickLink,
+} from 'src/server/graphql/types'
 import {
   InternalQuickLink,
   QuickLinksFeature,
@@ -17,7 +21,7 @@ export class QuickLinksService {
     private quickLinksModel: QuickLinksModel,
   ) {}
 
-  async find(linkId: string): Promise<string> {
+  async find(linkId: string): Promise<QuickLink> {
     const quickLink = await this.quickLinksModel
       .findOne({ id: linkId })
       .lean()
@@ -25,21 +29,50 @@ export class QuickLinksService {
 
     assertQuickLinkExist(quickLink)
 
-    return quickLink.link
+    return this.mapQuickLink(quickLink)
+  }
+
+  async findManyWithLimit(input: LastQuickLinksInput): Promise<QuickLink[]> {
+    const { count } = input
+
+    const quickLinks = await this.quickLinksModel
+      .find()
+      .sort({ _id: -1 })
+      .limit(count)
+      .lean()
+      .exec()
+
+    return quickLinks.map(this.mapQuickLink)
   }
 
   async create(
     input: CreateQuickLinkInput,
     params: CreateQuickLinkParams,
-  ): Promise<string> {
+  ): Promise<QuickLink> {
     const { link } = input
     const { origin } = params
 
     const id = nanoid(linkIdLength)
 
-    await this.quickLinksModel.create<InternalQuickLink>({ id, link })
+    const quickLink = await this.quickLinksModel.create<InternalQuickLink>({
+      id,
+      quickLink: `${origin}/${id}`,
+      longLink: link,
+    })
 
-    return `${origin}/${id}`
+    return this.mapQuickLink(quickLink)
+  }
+
+  private mapQuickLink = ({
+    id,
+    quickLink,
+    longLink,
+  }: InternalQuickLink): QuickLink => {
+    return {
+      id,
+      quickLink,
+      longLink,
+    }
   }
 }
 
